@@ -1,0 +1,26 @@
+'use client';
+
+import { useState } from 'react';
+import { entries, offers } from '../content-data';
+import { Header, Footer } from '../site-shell';
+
+const demoLeads = [
+  { name: 'Aisha', email: 'aisha@example.com', entry: 'Entry - Calculator', segment: 'Agency/client funnel', tags: ['lead', 'asset-1', 'agency'], activity: 'Asset 3 sent' },
+  { name: 'Sam', email: 'sam@example.com', entry: 'Entry - Templates', segment: 'Course/digital product funnel', tags: ['lead', 'asset-4', 'course'], activity: 'Offer recommendation pending' },
+  { name: 'Jordan', email: 'jordan@example.com', entry: 'Entry - Audit', segment: "I don't know yet", tags: ['lead', 'asset-2', 'unknown'], activity: 'Opened asset 2' },
+];
+
+export default function AdminPage() {
+  const [tab, setTab] = useState<'overview' | 'leads' | 'events' | 'offers'>('overview');
+  const [paused, setPaused] = useState(false);
+  const [selectedEntry, setSelectedEntry] = useState('all');
+  return <main><Header /><section className="admin-shell shell"><div className="admin-heading"><div><p className="eyebrow">Protected admin area · demo mode</p><h1>Funnel operations dashboard.</h1><p className="lede">The UI is wired for leads, tags, activity, performance, and sequence controls. Connect authentication and a production database before exposing this route publicly.</p></div><div className={`status-badge ${paused ? 'paused' : 'safe'}`}>{paused ? 'Nurture paused' : 'Safe defaults active'}</div></div><div className="admin-tabs">{(['overview', 'leads', 'events', 'offers'] as const).map((item) => <button className={tab === item ? 'active' : ''} onClick={() => setTab(item)} key={item}>{item}</button>)}<a href="/admin/sequences">Manage sequences →</a></div>
+      {tab === 'overview' && <><div className="metric-grid"><Metric label="Captured leads" value="128" note="+18% vs prior period" /><Metric label="Asset 4 selections" value="74" note="57.8% of captured leads" /><Metric label="Offer clicks" value="31" note="Recorded events only" /><Metric label="Provider receipt" value="Not connected" note="Verify after credentials are added" /></div><div className="admin-columns"><article className="admin-card"><div className="card-head"><div><p className="eyebrow">Entry performance</p><h2>Which question starts the journey?</h2></div><select value={selectedEntry} onChange={(event) => setSelectedEntry(event.target.value)}><option value="all">All entries</option>{Object.values(entries).map((entry) => <option value={entry.key} key={entry.key}>{entry.tag}</option>)}</select></div>{Object.values(entries).map((entry, index) => <div className="bar-row" key={entry.key}><span>{entry.tag}</span><div><i style={{ width: `${[74, 62, 47, 58, 39][index]}%` }} /></div><b>{[42, 31, 18, 27, 10][index]}</b></div>)}</article><article className="admin-card"><p className="eyebrow">Control plane</p><h2>Safe operational switches</h2><label className="toggle-row"><span><strong>Global nurture</strong><small>Stops future sends; preserves events.</small></span><input type="checkbox" checked={!paused} onChange={() => setPaused((value) => !value)} /></label><label className="toggle-row"><span><strong>Offer routing</strong><small>Disabled while affiliate URLs are placeholders.</small></span><input type="checkbox" disabled /></label><a className="secondary-button" href="/admin/sequences">Review sequence manager →</a></article></div></>}
+      {tab === 'leads' && <LeadTable />}
+      {tab === 'events' && <EventTable />}
+      {tab === 'offers' && <div className="admin-card"><p className="eyebrow">Affiliate configuration</p><h2>Offer destinations</h2><p className="muted">Every destination is intentionally null until the corresponding environment variable contains an approved URL.</p><div className="offer-admin-list">{Object.values(offers).map((offer) => <div key={offer.key}><div><strong>{offer.name}</strong><span>{offer.audience}</span></div><code>{offer.envKey}</code><em>Placeholder</em></div>)}</div></div>}
+    </section><Footer /></main>;
+}
+function Metric({ label, value, note }: { label: string; value: string; note: string }) { return <article className="metric-card"><span>{label}</span><strong>{value}</strong><small>{note}</small></article>; }
+function LeadTable() { return <div className="admin-card"><div className="card-head"><div><p className="eyebrow">Lead activity</p><h2>Recent contacts and intent signals</h2></div><span className="table-note">Demo rows · production DB required</span></div><div className="data-table">{demoLeads.map((lead) => <div className="data-row" key={lead.email}><div><strong>{lead.name} · {lead.email}</strong><span>{lead.entry} · {lead.segment}</span></div><div className="tag-list">{lead.tags.map((tag) => <em key={tag}>{tag}</em>)}</div><b>{lead.activity}</b></div>)}</div></div>; }
+function EventTable() { return <div className="admin-card"><p className="eyebrow">Central event stream</p><h2>Tracking readiness</h2><div className="event-list">{['PageView', 'LeadFormOpen', 'Lead', 'AssetDelivered', 'SegmentSelected', 'AffiliateOutboundClick'].map((event, index) => <div key={event}><strong>{event}</strong><span>{index < 4 ? 'Recorded in app' : 'Prepared; provider receipt unverified'}</span><b>{[548, 161, 128, 121, 74, 31][index]}</b></div>)}</div></div>; }

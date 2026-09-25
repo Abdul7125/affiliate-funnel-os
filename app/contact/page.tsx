@@ -1,0 +1,4 @@
+import { Footer, Header, PageHero } from '../site-shell';
+import { ContactForm } from './contact-form';
+export const metadata = { title: 'Contact — First Client Lab', description: 'Contact First Client Lab about the guide, recommendations, or corrections.' };
+export default function Contact(){ return <main><Header /><PageHero eyebrow="Contact" title="Questions, corrections, or a useful challenge?" body="Tell us what you are working on, flag information that may have changed, or ask about how a recommendation was evaluated." /><section className="contact-section shell"><div><h2>What to include</h2><p>If your message concerns a vendor program, include the program name and the page where you found the conflicting information. Never send passwords, payment details, or private account credentials.</p></div><ContactForm /></section><Footer /></main> }

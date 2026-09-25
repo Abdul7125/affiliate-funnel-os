@@ -1,0 +1,9 @@
+import { Footer, Header, PageHero } from '../site-shell';
+export const metadata = { title: 'Agency Starter Resources — First Client Lab', description: 'Practical resources for choosing a niche, packaging an offer, and starting client conversations.' };
+const resources = [
+  ['Positioning', 'Choose a niche without trapping yourself', 'Start narrow enough to learn quickly. Expand after repeated client evidence—not before.'],
+  ['Offer design', 'Turn “social media management” into a clear starter offer', 'Package a visible outcome, deliverables, timeline, and boundary a buyer can repeat back.'],
+  ['Prospecting', 'Write outreach that begins with relevance', 'Use a genuine observation and a useful question instead of a generic claim about growing revenue.'],
+  ['Measurement', 'Know whether the offer or outreach is failing', 'Track each stage separately: contact, reply, conversation, proposal, decision, and retention.'],
+];
+export default function Resources(){ return <main><Header /><PageHero eyebrow="Resource library" title="Practical answers for the work between idea and first client." body="Original, concise guidance designed to help you make a better next decision—not keep you consuming indefinitely." /><section className="section shell"><div className="resource-grid">{resources.map(([tag,title,body],i)=><article key={title}><span>0{i+1} · {tag}</span><h2>{title}</h2><p>{body}</p><a href="/guide">Apply it in the launch kit →</a></article>)}</div></section><section className="split-section"><div className="shell split-grid"><div><p className="eyebrow">Recommended learning order</p><h2>Learn only what your next action requires.</h2></div><div className="number-list"><p><b>1</b> Choose the client and problem.</p><p><b>2</b> Shape the starter service.</p><p><b>3</b> Create one sample or audit.</p><p><b>4</b> Begin conversations.</p><p><b>5</b> Use objections to decide what to learn next.</p></div></div></section><Footer /></main> }
