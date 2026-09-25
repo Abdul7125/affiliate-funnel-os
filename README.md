@@ -43,4 +43,4 @@ npm run build
 6. Connect GTM/GA/Meta IDs and credentials, run consented browser and server event tests, and verify provider dashboards.
 7. Set the production domain and complete privacy, consent, disclosure, accessibility, and mobile checks.
 
-The system has no live provider credentials and no verified GitHub remote in this environment. The local repository and commit are the handoff artifact.
+The system has no live provider credentials. The public GitHub repository is the developer handoff: `https://github.com/Abdul7125/affiliate-funnel-os`.
